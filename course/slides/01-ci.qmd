@@ -4,7 +4,7 @@ subtitle: "Concevoir une CI qui donne confiance"
 author: "Rental DevOps — Master informatique"
 format:
   revealjs:
-    theme: [default, ../theme.scss]
+    theme: default
     slide-number: c/t
     transition: fade
     background-transition: fade

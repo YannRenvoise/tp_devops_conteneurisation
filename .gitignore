@@ -30,6 +30,7 @@ htmlcov/
 
 # Quarto generated files
 course/.quarto/
+course/.gitignore
 course/_site/
 course/**/*.html
 course/**/*_files/
