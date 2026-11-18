@@ -61,6 +61,12 @@ Depuis la racine :
 ```bash
 python scripts/course.py test
 ```
+Pour moi : 
+```
+$env:GRADLE_USER_HOME="$PWD\.gradle-user"
+.\apps\pricing-service\.venv\Scripts\Activate.ps1
+python scripts/course.py test
+```
 
 Cette commande exécute les tests Gradle puis les tests Pytest.
 Pour diagnostiquer séparément un service, utiliser `test-java` ou

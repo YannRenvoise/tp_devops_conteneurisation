@@ -31,3 +31,12 @@ htmlcov/
 # Quarto generated files
 course/.quarto/
 course/_site/
+course/**/*.html
+course/**/*_files/
+course/site_libs/
+course/search.json
+.quarto-tmp/
+
+# Local Gradle workarounds/cache
+.gradle-local/
+.gradle-user/
