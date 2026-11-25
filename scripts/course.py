@@ -37,17 +37,43 @@ def test_java() -> None:
     run([*gradle_command(), "clean", "test"], cwd=CAR_SERVICE)
 
 
-def test_python() -> None:
+def python_command() -> str:
     venv_python = PRICING_SERVICE / ".venv" / (
         "Scripts/python.exe" if os.name == "nt" else "bin/python"
     )
-    python = venv_python if venv_python.exists() else Path(sys.executable)
-    run([str(python), "-m", "pytest"], cwd=PRICING_SERVICE)
+    return str(venv_python if venv_python.exists() else Path(sys.executable))
+
+
+def test_python() -> None:
+    run([python_command(), "-m", "pytest"], cwd=PRICING_SERVICE)
 
 
 def test() -> None:
     test_java()
     test_python()
+
+
+def lint_java() -> None:
+    run([*gradle_command(), "checkstyleMain", "checkstyleTest"], cwd=CAR_SERVICE)
+
+
+def lint_python() -> None:
+    python = python_command()
+    run([python, "-m", "ruff", "check", "app", "tests"], cwd=PRICING_SERVICE)
+    run(
+        [python, "-m", "ruff", "format", "--check", "app", "tests"],
+        cwd=PRICING_SERVICE,
+    )
+
+
+def lint() -> None:
+    lint_java()
+    lint_python()
+
+
+def verify() -> None:
+    test()
+    lint()
 
 
 def compose_up() -> None:
@@ -127,6 +153,10 @@ def main() -> int:
             "test",
             "test-java",
             "test-python",
+            "lint",
+            "lint-java",
+            "lint-python",
+            "verify",
             "compose-up",
             "compose-down",
             "smoke",
@@ -139,6 +169,10 @@ def main() -> int:
         "test": test,
         "test-java": test_java,
         "test-python": test_python,
+        "lint": lint,
+        "lint-java": lint_java,
+        "lint-python": lint_python,
+        "verify": verify,
         "compose-up": compose_up,
         "compose-down": compose_down,
         "smoke": smoke,
