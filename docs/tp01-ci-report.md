@@ -46,5 +46,9 @@ Les réponses à une fuite ne sont pas interchangeables :
 3. réécrire l'historique retire la valeur des anciens commits, mais exige une
    coordination et un force-push, et ne remplace jamais la révocation.
 
-Le test avec la valeur factice de l'enseignant doit être fait uniquement sur
-une branche jetable, puis cette branche doit être supprimée selon ses consignes.
+Le scénario a été vérifié avec un faux token GitHub généré localement sur la
+branche jetable `test/gitleaks-fake-secret`. Le contrôle `Secret detection` a
+échoué en 10 secondes avec la règle `github-pat`, a masqué la valeur dans les
+logs et a produit l'artefact SARIF `gitleaks-results.sarif.zip`. La pull request
+de test a ensuite été fermée sans fusion, puis la branche a été supprimée
+localement et sur le dépôt distant.
