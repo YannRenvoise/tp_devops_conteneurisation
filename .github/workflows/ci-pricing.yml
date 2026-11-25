@@ -45,6 +45,15 @@ jobs:
           mkdir -p build/test-results
           python -m pytest --junitxml=build/test-results/pytest.xml
 
+      - name: Upload Pytest reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: python-test-reports
+          path: apps/pricing-service/build/test-results/
+          if-no-files-found: warn
+          retention-days: 7
+
   quality:
     name: Python quality
     runs-on: ubuntu-latest
