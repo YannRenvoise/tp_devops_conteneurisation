@@ -15,7 +15,9 @@ from urllib.error import URLError
 from urllib.request import Request, urlopen
 
 
-ROOT = Path(__file__).resolve().parents[1]
+# Keep the logical path on Windows. Resolving a junction can reintroduce a
+# non-ASCII profile path that breaks Gradle worker classpaths.
+ROOT = Path(__file__).absolute().parents[1]
 CAR_SERVICE = ROOT / "apps" / "car-rental-service"
 PRICING_SERVICE = ROOT / "apps" / "pricing-service"
 
@@ -36,7 +38,11 @@ def test_java() -> None:
 
 
 def test_python() -> None:
-    run([sys.executable, "-m", "pytest"], cwd=PRICING_SERVICE)
+    venv_python = PRICING_SERVICE / ".venv" / (
+        "Scripts/python.exe" if os.name == "nt" else "bin/python"
+    )
+    python = venv_python if venv_python.exists() else Path(sys.executable)
+    run([str(python), "-m", "pytest"], cwd=PRICING_SERVICE)
 
 
 def test() -> None:
