@@ -1,0 +1,24 @@
+project:
+  type: website
+  output-dir: _site
+  render:
+    - index.qmd
+    - labs/*.qmd
+    - slides/*.qmd
+
+website:
+  title: "Rental DevOps"
+  navbar:
+    left:
+      - href: index.qmd
+        text: Accueil
+      - href: labs/tp01.qmd
+        text: TP 01
+      - href: labs/tp02.qmd
+        text: TP 02
+
+format:
+  html:
+    theme: cosmo
+    toc: true
+
